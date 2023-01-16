@@ -1,0 +1,62 @@
+
+
+
+權杖: DAvbLKq6aqI3M9yCHeQ9CZpGXPjo84eySDQ0UpUNVLX
+
+1. cURL 安裝下載與解說 : https://matthung0807.blogspot.com/2019/12/windows-curl.html
+   cURL 下載 : https://curl.se/windows/
+
+2. 我要如何設定或變更 PATH 系統變數？
+
+   Windows 10 和 Windows 8 
+   在「搜尋」中，搜尋並選取：系統 (控制台)
+   按一下進階系統設定連結。
+   按一下環境變數。在系統變數區段中，找到 PATH 環境變數並加以選取。按一下編輯。如果 PATH 環境變數不存在，請按一下新增。
+   在編輯系統變數 (或新增系統變數) 視窗中，指定 PATH 環境變數的值。按一下確定。按一下確定，將其餘的視窗全都關閉。
+
+   https://xenby.com/b/274-教學-如何使用-line-notify-對群組進行通知
+
+
+測試 : curl -H "Authorization: Bearer DAvbLKq6aqI3M9yCHeQ9CZpGXPjo84eySDQ0UpUNVLX" -d "message=2330 1000元買進" https://notify-api.line.me/api/notify
+curl -H "Authorization: Bearer DAvbLKq6aqI3M9yCHeQ9CZpGXPjo84eySDQ0UpUNVLX" -d "message=2330台績電 1000元買進" https://notify-api.line.me/api/notify
+
+'Excel VBA 測試程式
+Sub SendMessageToLineNotify()
+    Dim oXML As Object
+    Dim strToken As String
+    Dim URL As String
+        
+    '指定的Line Notify Token
+    strToken = "DAvbLKq6aqI3M9yCHeQ9CZpGXPjo84eySDQ0UpUNVLX"
+    
+    'Line Notify的傳送訊息網址
+    URL = "https://notify-api.line.me/api/notify"
+        
+    '中文字(帶Line貼圖)
+    'strMessage = "VBA 中文測試1234567890ABCabc" & _
+                 "&stickerPackageId=" & "1" & _
+                 "&stickerId=" & "100"
+                 
+    '中文字(不帶Line貼圖)
+    strMessage = "VBA 中文測試2330 台績電,600元買進1000張"
+
+    '建立Ajax物件
+    Set oXML = CreateObject("Microsoft.XMLHTTP")
+    With oXML
+        '使用同步傳輸
+        .Open "POST", URL, 0
+        
+        '設定傳送封包Header
+        .SetRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+        .SetRequestHeader "Authorization", "Bearer " & strToken
+        
+        '執行Ajax傳送
+        .send "message=" & Chr(10) & strMessage
+  
+        '顯示回報內容
+        Debug.Print oXML.responseText
+    End With
+    
+    '釋放物件資源
+    Set oXML = Nothing
+End Sub
